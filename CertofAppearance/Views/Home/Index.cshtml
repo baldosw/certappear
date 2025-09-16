@@ -1,0 +1,58 @@
+﻿@model Client;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+ 
+    <div class="card border">
+        <div class="card-body">
+            <form>
+                <fieldset>
+                    <legend class="h3 text-center text-uppercase">Certificate of Appearance Entry Form</legend>
+                    <div>
+                        <label for="firstName" class="form-label mt-4">First Name</label>
+                        <input type="text" class="form-control" id="firstName"   placeholder="Enter First Name" asp-for="FirstName">
+                        <small  class="text-danger form-text  " asp-validation-for="@Model.FirstName">Test</small>
+                    </div>
+                    <div>
+                        <label for="middleInitial" class="form-label mt-4">Middle Initial</label>
+                        <input type="text" class="form-control" id="middleInitial"   placeholder="Enter Middle Initial" asp-for="MiddileInitial">
+                        <small  class="text-danger form-text " asp-validation-for="@Model.MiddileInitial">Test</small>
+                    </div>
+                    <div>
+                        <label for="lastName" class="form-label mt-4">Last Name</label>
+                        <input type="text" class="form-control" id="lastName"   placeholder="Enter Last Name" asp-for="LastName">
+                        <small  class="text-danger form-text " asp-validation-for="@Model.LastName">Test</small>
+                    </div>
+                    <div>
+                        <label for="position" class="form-label mt-4">Position</label>
+                        <input type="text" class="form-control" id="position"   placeholder="Enter Position" asp-for="Position">
+                        <small  class="text-danger form-text " asp-validation-for="@Model.Position">Test</small>
+                    </div>
+                    <div>
+                        <label for="lgu" class="form-label mt-4">LGU</label>
+                        <input type="text" class="form-control" id="lgu"   placeholder="Enter LGU" asp-for="Lgu">
+                        <small id="lguError" class="form-text text-muted"></small>
+                        <small  class="text-danger form-text  " asp-validation-for="@Model.Lgu">Test</small>
+                    </div>
+                    <div>
+                        <label for="dateArrived" class="form-label mt-4">Date Arrived</label>
+                        <input type="date" class="form-control" id="dateArrived"   placeholder="Enter Date Arrived" asp-for="DateArrived" >
+                        <small  class="text-danger form-text " asp-validation-for="@Model.DateArrived">Test</small>
+                    </div>
+                    <div >
+                        <label for="dateReturned" class="form-label mt-4">Date Returned</label>
+                        <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned" asp-for="DateReturned">
+                        <small  class="text-danger form-text  " asp-validation-for="@Model.DateReturned">Test</small>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary" style="display: block; margin-top: 1rem; padding: 1rem 3.2rem; font-weight: 600;">Submit</button>
+                    </div>
+                    
+                </fieldset>
+               
+              </form>
+        </div>
+    </div>
+ 
