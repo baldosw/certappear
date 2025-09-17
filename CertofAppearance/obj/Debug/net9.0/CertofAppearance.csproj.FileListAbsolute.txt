@@ -254,3 +254,4 @@ C:\Users\blgf-will\RiderProjects\CertofAppearance\CertofAppearance\bin\Debug\net
 C:\Users\blgf-will\RiderProjects\CertofAppearance\CertofAppearance\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\blgf-will\RiderProjects\CertofAppearance\CertofAppearance\obj\Debug\net9.0\compressed\jv1nb3hapl-r6kiobcbw1.gz
 C:\Users\blgf-will\RiderProjects\CertofAppearance\CertofAppearance\obj\Debug\net9.0\compressed\g6oed37ve5-4xx08srgol.gz
+C:\Users\blgf-will\RiderProjects\CertofAppearance\CertofAppearance\obj\Debug\net9.0\CertofAppearance.sourcelink.json
