@@ -12,8 +12,7 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDBContext  _context;
 
-    [BindProperty]
-    public Client Client { get; set; }
+ 
 
     public HomeController(ILogger<HomeController> logger, ApplicationDBContext context)
     {
@@ -23,37 +22,44 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         Client c = new Client();
-        c.DateArrived =  DateOnly.FromDateTime(DateTime.Today);
-        c.DateReturned =  DateOnly.FromDateTime(DateTime.Today.AddDays(1));
+        
         return View(c);
     }
  
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Index(Client client)
-    {
-        if (ModelState.IsValid)
-        {
-            await _context.AddAsync(client);
-            await _context.SaveChangesAsync();
-            return View(client);
-        }
-        return View(new Client());
-    }
+    // [HttpPost]
+    // [ValidateAntiForgeryToken]
+    // public async Task<IActionResult> Index([FromBody]Client client)
+    // {
+    //     if (ModelState.IsValid)
+    //     {
+    //         await _context.AddAsync(client);
+    //         await _context.SaveChangesAsync();
+    //         return View(client);
+    //     }
+    //     return View(new Client());
+    // }
     
     
     
      // API -----------------
 
 
-     [HttpPost("api/postClient")]
-     public async Task<IActionResult> Post([FromBody] Client client)
+     [HttpPost("api/postclient")]
+     public async Task<IActionResult> Index([FromBody] Client aClient)
      {
+         // await _context.Clients.AddAsync(client);
+         // await _context.SaveChangesAsync();
+         // return Ok(new { message = "Successfully added client" });
+         aClient.FirstName = Convert.ToString(aClient.FirstName);
          try
          {
+          
+             
+             TryValidateModel(aClient);
+ 
              if (ModelState.IsValid)
              {
-                 await _context.Clients.AddAsync(client);
+                 await _context.Clients.AddAsync(aClient);
                  await _context.SaveChangesAsync();
                  return Ok(new { message = "Successfully added client" });
              }
@@ -70,9 +76,8 @@ public class HomeController : Controller
               
                  var dataJson = new { success = false, errors = errors };
                  string allErrors = string.Join("; ", errors);
-
-// Example log
-                 _logger.LogInformation("Validation errors: {Errors}", allErrors);
+         
+            
                  return BadRequest(dataJson);
              }
             

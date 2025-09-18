@@ -12,44 +12,44 @@
                     <legend class="h3 text-center text-uppercase">Certificate of Appearance Entry Form</legend>
                     <div>
                         <label for="firstName" class="form-label mt-4">First Name</label>
-                        <input type="text" class="form-control" id="firstName"  name = "firstName" placeholder="Enter First Name"  >
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"  >
+                        
                     </div>
                     <div>
                         <label for="middleInitial" class="form-label mt-4">Middle Initial</label>
                         <input type="text" class="form-control" id="middleInitial"   placeholder="Enter Middle Initial"  >
-                        <span asp-validation-for="MiddleInitial" class="text-danger"></span>
+ 
                     </div>
                     <div>
                         <label for="lastName" class="form-label mt-4">Last Name</label>
                         <input type="text" class="form-control" id="lastName"   placeholder="Enter Last Name"  >
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                         
                     </div>
                     <div>
                         <label for="position" class="form-label mt-4">Position</label>
                         <input type="text" class="form-control" id="position"   placeholder="Enter Position"  >
-                        <span asp-validation-for="Position" class="text-danger"></span>
+                         
                     </div>
                     <div>
                         <label for="lgu" class="form-label mt-4">LGU</label>
                         <input type="text" class="form-control" id="lgu"   placeholder="Enter LGU" >
                         <small id="lguError" class="form-text text-muted"></small>
-                        <span asp-validation-for="Lgu" class="text-danger"></span>
+                        
                     </div>
                     <div>
                         <label for="dateArrived" class="form-label mt-4">Date Arrived</label>
                         <input type="date" class="form-control" id="dateArrived"   placeholder="Enter Date Arrived"   >
-                        <span asp-validation-for="DateArrived" class="text-danger"></span>
+                       
                     </div>
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Date Returned</label>
                         <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned"  >
-                        <span asp-validation-for="DateReturned" class="text-danger"></span>
+                       
                     </div>
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Purpose</label>
                         <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose"></textarea>
-                        <span asp-validation-for="Purpose" class="text-danger"></span>
+                        
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary" id = "btnCreateSaveChanges" style="display: block; margin-top: 1rem; padding: 1rem 3.2rem; font-weight: 600;">Submit</button>
@@ -62,34 +62,24 @@
 <script>
 $(document).ready(function() {
             let btnCreateSaveChanges = document.getElementById("btnCreateSaveChanges");
-            // let firstName = document.getElementById("firstName");
-            // let middleInitial = document.getElementById("middleInitial");
-            // let lastName = document.getElementById("lastName");
-            // let position = document.getElementById("position");
-            // let lgu = document.getElementById("lgu");
-            // let dateArrived = document.getElementById("dateArrived");
-            // let dateReturned = document.getElementById("dateReturned");
-            // let purpose  = document.getElementById("purpose");
-            
-            
-            btnCreateSaveChanges.addEventListener('click', async (e) => {
+ 
+    btnCreateSaveChanges.addEventListener('click', async  (e) => {
                 e.preventDefault();
-                let formData = {
-                    FirstName: document.getElementById("firstName").value,
-                    MiddleInitial: document.getElementById("middleInitial").value,
-                    LastName: document.getElementById("lastName").value,
-                    DateArrived: document.getElementById("dateArrived").value,
-                    DateReturned: document.getElementById("dateReturned").value,
-                    Position: document.getElementById("position").value,
-                    Lgu: document.getElementById("lgu").value,
-                    Purpose: document.getElementById("purpose").value
-                };
-                
-                console.log(formData)
+        let formData = {
+            "lgu": "Manila",
+            "purpose": "Business Permit",
+            "lastName": "Dela Cruz",
+            "position": "Manager",
+            "firstName": "Juan",
+            "middleInitial": "Hizon",
+        }
+
+        console.log(formData)
                 $.ajax({
-                    url: '/api/postClient/',
+                    url: '/api/postclient/',
                     type: 'POST',
-                    contentType: 'application/json',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
                     data: JSON.stringify(formData),
                     success: function (response) {
                             Swal.fire({

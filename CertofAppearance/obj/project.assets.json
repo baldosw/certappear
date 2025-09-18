@@ -5109,24 +5109,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\blgf-will\\.nuget\\packages\\": {}
+    "C:\\Users\\will\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 25.1\\Components\\Offline Packages": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\blgf-will\\RiderProjects\\CertofAppearance\\CertofAppearance\\CertofAppearance.csproj",
+      "projectUniqueName": "C:\\Users\\will\\Videos\\dotnets\\certappear\\CertofAppearance\\CertofAppearance.csproj",
       "projectName": "CertofAppearance",
-      "projectPath": "C:\\Users\\blgf-will\\RiderProjects\\CertofAppearance\\CertofAppearance\\CertofAppearance.csproj",
-      "packagesPath": "C:\\Users\\blgf-will\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\blgf-will\\RiderProjects\\CertofAppearance\\CertofAppearance\\obj\\",
+      "projectPath": "C:\\Users\\will\\Videos\\dotnets\\certappear\\CertofAppearance\\CertofAppearance.csproj",
+      "packagesPath": "C:\\Users\\will\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\will\\Videos\\dotnets\\certappear\\CertofAppearance\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\DevExpress 25.1\\Components\\Offline Packages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\blgf-will\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\will\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 25.1\\Components\\System\\Components\\Packages": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5145,7 +5157,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -5199,7 +5211,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.110/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
