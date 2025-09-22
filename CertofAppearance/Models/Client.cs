@@ -35,6 +35,12 @@ public class Client
     [Required]
     [StringLength(50, MinimumLength =2 , ErrorMessage = "Purpose must be between 2 and 50 characters.")]
     public string Purpose { get; set; }
+    
+    [Required]
+    public DateOnly DateArrived { get; set; }
+    
+    [Required]
+    public DateOnly DateReturned { get; set; }
      
    
 }

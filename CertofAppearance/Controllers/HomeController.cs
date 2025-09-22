@@ -22,41 +22,21 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         Client c = new Client();
+        c.DateArrived = DateOnly.FromDateTime(DateTime.Now);
+        c.DateReturned = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
         
         return View(c);
     }
- 
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public async Task<IActionResult> Index([FromBody]Client client)
-    // {
-    //     if (ModelState.IsValid)
-    //     {
-    //         await _context.AddAsync(client);
-    //         await _context.SaveChangesAsync();
-    //         return View(client);
-    //     }
-    //     return View(new Client());
-    // }
-    
-    
-    
+  
      // API -----------------
 
 
      [HttpPost("api/postclient")]
      public async Task<IActionResult> Index([FromBody] Client aClient)
      {
-         // await _context.Clients.AddAsync(client);
-         // await _context.SaveChangesAsync();
-         // return Ok(new { message = "Successfully added client" });
-         aClient.FirstName = Convert.ToString(aClient.FirstName);
          try
          {
-          
-             
-             TryValidateModel(aClient);
- 
+            
              if (ModelState.IsValid)
              {
                  await _context.Clients.AddAsync(aClient);
@@ -75,9 +55,7 @@ public class HomeController : Controller
                      .ToList();
               
                  var dataJson = new { success = false, errors = errors };
-                 string allErrors = string.Join("; ", errors);
-         
-            
+              
                  return BadRequest(dataJson);
              }
             

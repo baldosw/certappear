@@ -3,53 +3,52 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
  
     <div class="card border">
         <div class="card-body">
-            <form >
+            <form  >
                 <fieldset>
                     <legend class="h3 text-center text-uppercase">Certificate of Appearance Entry Form</legend>
                     <div>
                         <label for="firstName" class="form-label mt-4">First Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"  >
-                        
+                        <input type="text" class="form-control" id="firstName"  placeholder="Enter First Name"  >
+                        <small  id="errorFirstName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="middleInitial" class="form-label mt-4">Middle Initial</label>
                         <input type="text" class="form-control" id="middleInitial"   placeholder="Enter Middle Initial"  >
- 
+                        <small  id="errorFirstName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="lastName" class="form-label mt-4">Last Name</label>
-                        <input type="text" class="form-control" id="lastName"   placeholder="Enter Last Name"  >
-                         
+                        <input type="text" class="form-control" id="lastName"   asp-for="LastName" placeholder="Enter Last Name"  >
+                        <small  id="errorLastName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="position" class="form-label mt-4">Position</label>
-                        <input type="text" class="form-control" id="position"   placeholder="Enter Position"  >
-                         
+                        <input type="text" class="form-control" id="position"  asp-for="Position" placeholder="Enter Position"  >
+                        <small  id="errorPosition" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
-                        <label for="lgu" class="form-label mt-4">LGU</label>
+                        <label for="lgu" class="form-label mt-4" asp-for="Lgu">LGU</label>
                         <input type="text" class="form-control" id="lgu"   placeholder="Enter LGU" >
                         <small id="lguError" class="form-text text-muted"></small>
-                        
+                        <small  id="errorLgu" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="dateArrived" class="form-label mt-4">Date Arrived</label>
-                        <input type="date" class="form-control" id="dateArrived"   placeholder="Enter Date Arrived"   >
-                       
+                        <input type="date" class="form-control" id="dateArrived"   placeholder="Enter Date Arrived" asp-for="DateArrived"  >
+                        <small  id="errorDateArrived" class="text-danger errorFieldText"></small>
                     </div>
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Date Returned</label>
-                        <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned"  >
-                       
+                        <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned" asp-for="DateReturned" >
+                        <small  id="errorDateReturned" class="text-danger "></small>
                     </div>
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Purpose</label>
-                        <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose"></textarea>
-                        
+                        <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose" asp-for="Purpose"></textarea>
+                        <small  id="errorPurpose" class="text-danger "></small>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary" id = "btnCreateSaveChanges" style="display: block; margin-top: 1rem; padding: 1rem 3.2rem; font-weight: 600;">Submit</button>
@@ -61,20 +60,125 @@
 @section Scripts {
 <script>
 $(document).ready(function() {
-            let btnCreateSaveChanges = document.getElementById("btnCreateSaveChanges");
- 
-    btnCreateSaveChanges.addEventListener('click', async  (e) => {
-                e.preventDefault();
-        let formData = {
-            "lgu": "Manila",
-            "purpose": "Business Permit",
-            "lastName": "Dela Cruz",
-            "position": "Manager",
-            "firstName": "Juan",
-            "middleInitial": "Hizon",
+    let btnCreateSaveChanges = document.getElementById("btnCreateSaveChanges");
+    let clientErrors = [];
+
+    //-----------------------------------Utility---------------------------------------------------------------
+
+    function clearTextInput(){
+        $('input[type="text"], textarea').val("");
+        $('input[type="file"]').val("");
+        $('select').prop('selectedIndex', 0);
+    }
+
+    function pushNotify(changesText, color1, color2) {
+        Toastify({
+            text: changesText,
+            duration: 3000,
+            destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: `linear-gradient(to right, ${color1}, ${color2})`,
+            },
+            onClick: function(){}  
+        }).showToast();
+    }
+
+    function clearErrorMessages(){
+        $('.errorFieldText').text('')
+    }
+
+//-------------------------------------Validation------------------------------------------------------------
+
+    function validateInput(field, value, minimumLength, maximumLength) {
+
+        if (!value) {
+            return `${field} is required.`;
         }
 
-        console.log(formData)
+        if (value.length < minimumLength || value.length > maximumLength) {
+            return `${field} value cannot exceed ${maximumLength} characters and should not be less than ${minimumLength} characters.`;
+        }
+
+        return null;
+    }
+
+    function validateSelect(field, value) {
+        if (!value) {
+            return `${field} is required.`;
+        }
+        return null;
+    }
+
+    function validateValueIfNullOrUndefined(value) {
+        if (value === null || value === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function displayValidationError(errorField, errorMessage){
+        if (validateValueIfNullOrUndefined(errorMessage)){
+            $(errorField).text(errorMessage)
+            clientErrors.push(errorMessage)
+        }
+    }
+
+    function checkIfPropertyExistsThenGetValue(arrayObj, propertyName, callback) {
+        arrayObj.forEach(function(obj) {
+            if (obj.hasOwnProperty(propertyName)) {
+                callback(obj[propertyName]);
+                return;
+            }
+        });
+        callback(null);
+    }
+
+    function checkFileType(file) {
+        if (file) {
+            const mimeType = file.type;
+            if (mimeType === 'application/pdf' || mimeType.startsWith('image/')) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+ 
+ 
+    btnCreateSaveChanges.addEventListener('click', async  (e) => {
+            e.preventDefault();
+    
+            let formData = {
+                "firstName": $('#firstName').val(),
+                "middleInitial": $('#middleInitial').val(),
+                "lastName": $('#lastName').val(),
+                "position": $('#position').val(),
+                "lgu": $('#lgu').val(),
+                "purpose": $('#purpose').val(),
+                "dateArrived": $('#dateArrived').val(),
+                "dateReturned": $('#dateReturned').val(),
+            };
+          
+            let validateFirstName = validateInput('First Name', formData.firstName, 2, 60);
+            let validateLastName = validateInput('Last Name', formData.lastName, 2, 60);
+            let validatePosition = validateInput('Position', formData.position, 2, 60);
+            let validateLgu = validateInput('LGU', formData.lgu, 2, 60);
+            let validatePurpose = validateInput('LGU', formData.purpose, 2, 60);
+            
+            clearErrorMessages();
+            displayValidationError('#errorFirstName', validateFirstName)
+            displayValidationError('#errorLastName', validateLastName)
+            displayValidationError('#errorPosition', validatePosition)
+            displayValidationError('#errorLgu', validateLgu)
+            displayValidationError('#errorPurpose', validatePurpose)
+        
+            if(clientErrors.length < 1) {
                 $.ajax({
                     url: '/api/postclient/',
                     type: 'POST',
@@ -82,17 +186,22 @@ $(document).ready(function() {
                     dataType: 'json',
                     data: JSON.stringify(formData),
                     success: function (response) {
-                            Swal.fire({
-                                title: "Drag me!",
-                                icon: "success",
-                                draggable: true
-                            });
-                       
+                        clearTextInput()
+                        Swal.fire({
+                            title: "Sucessfully created your certificate of appearance!",
+                            icon: "success",
+                            draggable: true
+                        });
+                        pushNotify("Successfully created. Please wait for printing.", "#3DC981", "#3DC93D");
                     },error: function (xhr, textStatus, errorThrown) {
                         console.log(xhr, textStatus, errorThrown);
                     }
                 });
-            });
+            }else{
+                pushNotify("Please check for errors...", "#C93D62", "#C93D3D");
+            }
+                clientErrors = [];
+        });
     });
 
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CertofAppearance")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8faf74b9daca78aea54fe948f2ac6303c9f4920e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da22b9c7c408170988d7bf6eed11e6000d27ae76")]
 [assembly: System.Reflection.AssemblyProductAttribute("CertofAppearance")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CertofAppearance")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
