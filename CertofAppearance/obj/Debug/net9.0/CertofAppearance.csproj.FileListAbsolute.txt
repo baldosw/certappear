@@ -439,7 +439,6 @@ C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\scoped
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\scopedcss\bundle\CertofAppearance.styles.css
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\scopedcss\projectbundle\CertofAppearance.bundle.scp.css
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\jv1nb3hapl-r6kiobcbw1.gz
-C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\g6oed37ve5-4xx08srgol.gz
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\ohsq1tf5p7-61n19gt1b8.gz
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\rt7i4qzdr1-xtxxf3hu2r.gz
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\6s2r51m4tb-t1cqhe9u97.gz
@@ -513,3 +512,6 @@ C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\refint
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\CertofAppearance.pdb
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\CertofAppearance.genruntimeconfig.cache
 C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\ref\CertofAppearance.dll
+C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\9lpwrtwd81-4s6zrgpfrv.gz
+C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\2ygyfejz2l-ggsgz28pof.gz
+C:\Users\will\Videos\dotnets\certappear\CertofAppearance\obj\Debug\net9.0\compressed\g6oed37ve5-7j742tusnu.gz

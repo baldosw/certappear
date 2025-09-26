@@ -32,7 +32,6 @@
                     <div>
                         <label for="lgu" class="form-label mt-4" asp-for="Lgu">LGU</label>
                         <input type="text" class="form-control" id="lgu"   placeholder="Enter LGU" >
-                        <small id="lguError" class="form-text text-muted"></small>
                         <small  id="errorLgu" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
@@ -43,11 +42,11 @@
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Date Returned</label>
                         <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned"  >
-                        <small  id="errorDateReturned" class="text-danger "></small>
+                    <small id="errorDateReturned" class="text-danger errorFieldText"></small>
                     </div>
                     <div >
-                        <label for="dateReturned" class="form-label mt-4">Purpose</label>
-                        <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose" asp-for="Purpose"></textarea>
+                    <label for="purpose" class="form-label mt-4">Purpose</label>
+                        <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose"></textarea>
                         <small  id="errorPurpose" class="text-danger errorFieldText"></small>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -115,7 +114,7 @@ $(document).ready(function() {
 
         return null;
     }
-
+     
     function validateSelect(field, value) {
         if (!value) {
             return `${field} is required.`;
@@ -158,6 +157,17 @@ $(document).ready(function() {
         }
         return false;
     }
+
+    function validateDates(dateArrived, dateReturned) {    
+        let arrived = new Date(dateArrived);
+        let returned = new Date(dateReturned);
+                
+        if (arrived > returned) {             
+           return  "Date Arrived should be before or same date with Date Returned"
+        }
+
+        return null;
+    }
  
  
     btnCreateSaveChanges.addEventListener('click', async  (e) => {
@@ -180,7 +190,7 @@ $(document).ready(function() {
             let validateLastName = validateInput('Last Name', formData.lastName, 2, 60);
             let validatePosition = validateInput('Position', formData.position, 2, 60);
             let validateLgu = validateInput('LGU', formData.lgu, 2, 60);
-            let validatePurpose = validateInput('LGU', formData.purpose, 2, 60);
+            let validatePurpose = validateInput('Purpose', formData.purpose, 2, 60);
             
             clearErrorMessages();
             displayValidationError('#errorFirstName', validateFirstName)
@@ -188,6 +198,7 @@ $(document).ready(function() {
             displayValidationError('#errorPosition', validatePosition)
             displayValidationError('#errorLgu', validateLgu)
             displayValidationError('#errorPurpose', validatePurpose)
+            displayValidationError('#errorDateReturned', validateDates(formData.dateArrived, formData.dateReturned))
         
             if(clientErrors.length < 1) {
                 $.ajax({
@@ -204,6 +215,10 @@ $(document).ready(function() {
                             draggable: true
                         });
                         pushNotify("Successfully created. Please wait for printing.", "#3DC981", "#3DC93D");
+                                         
+                        setTimeout(function () {
+                                             window.open("/print?id=" + response.id, "_blank");
+                        }, 3000);
                     },error: function (xhr, textStatus, errorThrown) {
                         console.log(xhr, textStatus, errorThrown);
                     }
