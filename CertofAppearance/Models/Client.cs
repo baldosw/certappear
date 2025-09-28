@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json.Serialization;
+using CertofAppearance.Common;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CertofAppearance.Models;
@@ -41,6 +42,16 @@ public class Client
     
     [Required]
     public DateOnly DateReturned { get; set; }
+
+    public string Gender { get; set; }
      
-   
+    public DateOnly DateCreated { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    
+    public string? Pronoun { get; set; }
+    
+    public string? Prefix { get; set; }
+
+    public int? SignatoryId { get; set; }
+    
+    public Signatory? Signatory { get; set; }
 }

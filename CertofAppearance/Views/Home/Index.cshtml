@@ -11,27 +11,27 @@
                     <legend class="h3 text-center text-uppercase">Certificate of Appearance Entry Form</legend>
                     <div>
                         <label for="firstName" class="form-label mt-4">First Name</label>
-                        <input type="text" class="form-control" id="firstName"  placeholder="Enter First Name"  >
+                        <input type="text" class="form-control" id="firstName"  placeholder="Enter your First Name"  >
                         <small  id="errorFirstName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="middleInitial" class="form-label mt-4">Middle Initial</label>
-                        <input type="text" class="form-control" id="middleInitial"   placeholder="Enter Middle Initial"  >
+                        <input type="text" class="form-control" id="middleInitial"   placeholder="Enter your Middle Initial"  >
                         <small  id="errorFirstName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
                         <label for="lastName" class="form-label mt-4">Last Name</label>
-                        <input type="text" class="form-control" id="lastName"   asp-for="LastName" placeholder="Enter Last Name"  >
+                        <input type="text" class="form-control" id="lastName"   asp-for="LastName" placeholder="Enter your Last Name"  >
                         <small  id="errorLastName" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
-                        <label for="position" class="form-label mt-4">Position</label>
-                        <input type="text" class="form-control" id="position"  asp-for="Position" placeholder="Enter Position"  >
+                        <label for="position" class="form-label mt-4">Position (eg: Municipal Treasurer; Municipal Assessor; RCC II)</label>
+                        <input type="text" class="form-control" id="position"  asp-for="Position" placeholder="Enter your Position"  >
                         <small  id="errorPosition" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
-                        <label for="lgu" class="form-label mt-4" asp-for="Lgu">LGU</label>
-                        <input type="text" class="form-control" id="lgu"   placeholder="Enter LGU" >
+                        <label for="lgu" class="form-label mt-4" asp-for="Lgu">LGU (eg: Borongan City; Alang-Alang, Leyte)</label>
+                        <input type="text" class="form-control" id="lgu"   placeholder="Enter your LGU" >
                         <small  id="errorLgu" class="text-danger errorFieldText"></small>
                     </div>
                     <div>
@@ -42,10 +42,26 @@
                     <div >
                         <label for="dateReturned" class="form-label mt-4">Date Returned</label>
                         <input type="date" class="form-control" id="dateReturned"   placeholder="Enter Date Returned"  >
-                    <small id="errorDateReturned" class="text-danger errorFieldText"></small>
+                        <small id="errorDateReturned" class="text-danger errorFieldText"></small>
                     </div>
                     <div >
-                    <label for="purpose" class="form-label mt-4">Purpose</label>
+                        <label for="gender" class="form-label mt-4">Gender</label>
+                        <select  id="gender" class="form-control">
+                            <option value="">---Select Gender---</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                        </select>
+                        <small id="errorGender" class="text-danger errorFieldText"></small>
+                    </div>
+                    <div >
+                        <label for="signatoryId" class="form-label mt-4">Signatory</label>
+                        <select  id="signatoryId" class="form-control"  >
+                            
+                        </select>
+                        <small id="errorSignatory" class="text-danger errorFieldText"></small>
+                    </div>
+                    <div >
+                        <label for="purpose" class="form-label mt-4">Purpose</label>
                         <textarea   id="purpose" cols="30" rows="10" class="form-control" placeholder="Enter Purpose"></textarea>
                         <small  id="errorPurpose" class="text-danger errorFieldText"></small>
                     </div>
@@ -64,11 +80,28 @@ $(document).ready(function() {
     const today = new Date().toISOString().split('T')[0];
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
- 
     const tomorrowStr = tomorrow.toISOString().split('T')[0];
  
     $('#dateArrived').val(today)
     $('#dateReturned').val(tomorrowStr)
+
+    // -----------------Load Data---------------------------------
+
+    $.ajax({
+        url: '/api/signatory/',  
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            let $dropdown = $("#signatoryId");
+            $dropdown.empty();
+            $.each(data, function (i, item) {
+                $dropdown.append(
+                    $('<option></option>').val(item.id).text(item.name)
+                );
+            });
+        },
+        
+    });
 
 
     //-----------------------------------Utility---------------------------------------------------------------
@@ -86,9 +119,9 @@ $(document).ready(function() {
             destination: "https://github.com/apvarun/toastify-js",
             newWindow: true,
             close: true,
-            gravity: "bottom", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
+            gravity: "bottom", 
+            position: "right", 
+            stopOnFocus: true,  
             style: {
                 background: `linear-gradient(to right, ${color1}, ${color2})`,
             },
@@ -100,6 +133,12 @@ $(document).ready(function() {
         $('.errorFieldText').text('')
     }
 
+    function toProper(str) {
+        return str.toLowerCase().replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+        });
+    }
+ 
 //-------------------------------------Validation------------------------------------------------------------
 
     function validateInput(field, value, minimumLength, maximumLength) {
@@ -168,22 +207,28 @@ $(document).ready(function() {
 
         return null;
     }
- 
- 
+
+    //----------------------Events or Triggers-----------------------
+   
     btnCreateSaveChanges.addEventListener('click', async  (e) => {
             e.preventDefault();
 
            
             let formData = {
-                "firstName": $('#firstName').val(),
-                "middleInitial": $('#middleInitial').val(),
-                "lastName": $('#lastName').val(),
+                "firstName": toProper($('#firstName').val()),
+                "middleInitial": toProper($('#middleInitial').val()),
+                "lastName": toProper($('#lastName').val()),
                 "position": $('#position').val(),
-                "lgu": $('#lgu').val(),
-                "purpose": $('#purpose').val(),
+                "lgu": toProper($('#lgu').val()),
+                "purpose": toProper($('#purpose').val()),
                 "dateArrived": $('#dateArrived').val(),
                 "dateReturned": $('#dateReturned').val(),
+                "gender": $('#gender').val(),
+                "signatoryId": $('#signatoryId').val(),
+              
             };
+            
+            console.log(formData)
  
              
             let validateFirstName = validateInput('First Name', formData.firstName, 2, 60);
@@ -191,6 +236,7 @@ $(document).ready(function() {
             let validatePosition = validateInput('Position', formData.position, 2, 60);
             let validateLgu = validateInput('LGU', formData.lgu, 2, 60);
             let validatePurpose = validateInput('Purpose', formData.purpose, 2, 60);
+            let validateGender = validateSelect('Gender', formData.gender);
             
             clearErrorMessages();
             displayValidationError('#errorFirstName', validateFirstName)
@@ -199,6 +245,7 @@ $(document).ready(function() {
             displayValidationError('#errorLgu', validateLgu)
             displayValidationError('#errorPurpose', validatePurpose)
             displayValidationError('#errorDateReturned', validateDates(formData.dateArrived, formData.dateReturned))
+            displayValidationError('#errorGender', validateGender)
         
             if(clientErrors.length < 1) {
                 $.ajax({
@@ -210,15 +257,28 @@ $(document).ready(function() {
                     success: function (response) {
                         clearTextInput()
                         Swal.fire({
-                            title: "Sucessfully created your certificate of appearance!",
+                            title: "Sucessfully created your Certificate of Appearance!",
                             icon: "success",
                             draggable: true
                         });
-                        pushNotify("Successfully created. Please wait for printing.", "#3DC981", "#3DC93D");
-                                         
+                        pushNotify("Successfully created. Please wait for printing.", "#3DC981", "#3DC93D");                         
+                        // setTimeout(function () {
+                        //    window.open("/print/" + response.id, "_blank");
+                        // }, 1000);
+
                         setTimeout(function () {
-                                             window.open("/print?id=" + response.id, "_blank");
-                        }, 3000);
+                            var iframe = document.createElement("iframe");
+                            iframe.style.display = "none";
+                            iframe.src = "/print/" + response.id;
+
+                            iframe.onload = function () {
+                                iframe.contentWindow.focus();
+                                iframe.contentWindow.print();
+                            };
+
+                            document.body.appendChild(iframe);
+                        }, 1000);
+                        
                     },error: function (xhr, textStatus, errorThrown) {
                         console.log(xhr, textStatus, errorThrown);
                     }

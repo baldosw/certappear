@@ -11,5 +11,6 @@ public class ApplicationDBContext :DbContext
     }
     
     public DbSet<Client> Clients { get; set; }
+    public DbSet<Signatory> Signatories { get; set; }
 
 }   

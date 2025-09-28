@@ -1,7 +1,9 @@
 using System.Diagnostics;
+using CertofAppearance.Common;
 using CertofAppearance.Data;
 using Microsoft.AspNetCore.Mvc;
 using CertofAppearance.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CertofAppearance.Controllers;
 
@@ -36,12 +38,23 @@ public class HomeController : Controller
      {
          try
          {
-            
+             aClient.DateCreated = DateOnly.FromDateTime(DateTime.Now);
+             if (string.Equals(aClient.Gender, GENDER.MALE, StringComparison.OrdinalIgnoreCase))
+             {
+                 aClient.Prefix = "Mr.";
+                 aClient.Pronoun = "his";
+             }
+             else
+             {
+                 aClient.Prefix = "Ms.";
+                 aClient.Pronoun = "her";
+             }
+              
              if (ModelState.IsValid)
              {
                  await _context.Clients.AddAsync(aClient);
                  await _context.SaveChangesAsync();
-                 return Ok(new { message = "Successfully added client" });
+                 return Ok(new { message = "Successfully added client", id = aClient.Id });
              }
              else
              {
